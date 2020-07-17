@@ -1,5 +1,7 @@
 package org.hibernate.example.reactive;
 
+import org.hibernate.reactive.mutiny.Mutiny;
+
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
@@ -41,6 +43,8 @@ public class MutinyMain {
 		factory.withTransaction(
 				// persist the Authors with their Books in a transaction
 				(session, tx) -> session.persist(author1, author2)
+						.flatMap(Mutiny.Session::flush)
+						.flatMap(s -> s.refresh())
 		)
 				// wait for it to finish
 				.await().indefinitely();
@@ -136,6 +140,6 @@ public class MutinyMain {
 	 * @return the selected persistence unit name or the default one
 	 */
 	public static String persistenceUnitName(String[] args) {
-		return args.length > 0 ? args[0] : "postgresql-example";
+		return args.length > 0 ? args[0] : "mysql-example";
 	}
 }
