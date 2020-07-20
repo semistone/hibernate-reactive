@@ -15,7 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 @Table(name="books")
 class Book {
 	@Id @GeneratedValue
-	Integer id;
+	Long id;
 
 	@NotNull @Size(min=13, max=13)
 	@Basic(fetch = LAZY)
@@ -38,4 +38,32 @@ class Book {
 	}
 
 	Book() {}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
 }
